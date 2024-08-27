@@ -92,6 +92,8 @@ jobs:
     - name: Release recovery image
       uses: softprops/action-gh-release@v1
       with:
+       tag_name: TS6G
+       name: TWRP37x_12
        files: | 
          workspace/out/target/product/KE5k/recovery*.img
          workspace/out/target/product/KE5k/*.zip
