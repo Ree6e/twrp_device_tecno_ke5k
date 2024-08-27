@@ -91,10 +91,13 @@ jobs:
              
     - name: Release recovery image
       uses: softprops/action-gh-release@v1
+      with:
+       files: | 
+         workspace/out/target/product/KE5k/recovery*.img
+         workspace/out/target/product/KE5k/*.zip
+         workspace/out/target/product/KE5k/*vendor*.img
+         name: KE5k-${{ github.run_id }}
+         tag_name: ${{ github.run_id }}
       env:
        GITHUB_TOKEN: ${{ secrets.TEST }}
-      with:
-       tag_name: TS6G
-       name: TWRP37x_12
-       files: | 
-         twrp/out/target/product/KE5k/recovery*.img
+
