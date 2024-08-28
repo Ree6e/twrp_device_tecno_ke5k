@@ -84,14 +84,20 @@ jobs:
        PATH=~/bin:$PATH
        cd twrp
        export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch twrp_KE5k-eng && mka $TARGET -j$(nproc --all)
-       cp  out/target/product/KE5k/recovery.img    out/target/product/KE5k/boot-TS6G-A10-$(date +"%Y%m%d-%H%M").img  
+       cp  out/target/product/KE5k/recovery.img    out/target/product/KE5k/recovery-TS6G-A10-$(date +"%Y%m%d-%H%M").img  
              
     - name: Release recovery image
       uses: softprops/action-gh-release@v1
       with:
-       tag_name: TS6G
-       name: TWRP37x_12
-       files: | 
-         twrp/out/target/product/KE5k/recovery*.img
+        files: | 
+          workspace/out/target/product/KE5k/recovery*.img
+          workspace/out/target/product/KE5k/*.zip
+          workspace/out/target/product/KE5k/*vendor*.img
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          Manifest: twrp-12.1
+          Device: KE5k
+          Target: recovery.img
       env:
         GITHUB_TOKEN: ${{ secrets.TEST }}
